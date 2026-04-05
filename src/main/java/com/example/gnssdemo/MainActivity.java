@@ -24,11 +24,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 				RtkLibWrapper rtkW = new RtkLibWrapper();
+				String ver = rtkW.getRtklibVersion();
 				Python py = Python.getInstance();
 				PyObject module = py.getModule("rtk_demo");
 				PyObject result = module.callAttr("rtk_test", 5, 3);
 				int sum = result.toInt();
-                Toast.makeText(MainActivity.this, "Hello, Android! Result is "+sum, Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "Hello, Android! Result is "+sum+";rtklib ver: "+ver, Toast.LENGTH_SHORT).show();
             }
         });
     }
