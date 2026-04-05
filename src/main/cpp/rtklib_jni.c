@@ -2,7 +2,9 @@
 #include "rtklib.h"
 
 // JNI 函数声明：必须使用 extern "C" 防止 C++ 名称修饰（即使在C文件中也需声明）
+#ifdef __cplusplus
 extern "C" {
+#endif
 JNIEXPORT jint JNICALL Java_com_example_gnssdemo_RtkLibWrapper_rtkpos(JNIEnv *env, jobject thiz, jstring rover, jstring base, jstring output) {
 
     // 获取 Java 字符串为 C 字符串
@@ -20,4 +22,6 @@ JNIEXPORT jint JNICALL Java_com_example_gnssdemo_RtkLibWrapper_rtkpos(JNIEnv *en
 
     return result;
 }
+#ifdef __cplusplus
 }
+#endif
