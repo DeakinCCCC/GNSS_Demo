@@ -25,7 +25,7 @@ chaquopy {
     defaultConfig {
 		version = "3.12"
         pip {
-            install numpy
+            install "numpy"
 			//install "pyrtklib5"
         }
     }
