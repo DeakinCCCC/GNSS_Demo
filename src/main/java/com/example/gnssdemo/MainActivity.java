@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+				RtkLibWrapper rtkW = new RtkLibWrapper();
 				Python py = Python.getInstance();
 				PyObject module = py.getModule("rtk_demo");
 				PyObject result = module.callAttr("rtk_test", 5, 3);
