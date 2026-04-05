@@ -1,28 +1,48 @@
 #include <jni.h>
+#include <android/log.h>
 #include "rtklib.h"
 
-// JNI 函数声明：必须使用 extern "C" 防止 C++ 名称修饰（即使在C文件中也需声明）
+#define LOG_TAG "RTKLIB_JNI"
+#define LOGI(...) __android_log_print(ANDROID_LOG_INFO, LOG_TAG, __VA_ARGS__)
+
 #ifdef __cplusplus
 extern "C" {
 #endif
-JNIEXPORT jint JNICALL Java_com_example_gnssdemo_RtkLibWrapper_rtkpos(JNIEnv *env, jobject thiz, jstring rover, jstring base, jstring output) {
 
-    // 获取 Java 字符串为 C 字符串
-    const char *r = (*env)->GetStringUTFChars(env, rover, NULL);
-    const char *b = (*env)->GetStringUTFChars(env, base, NULL);
-    const char *o = (*env)->GetStringUTFChars(env, output, NULL);
+JNIEXPORT JNICALL jstring 
+Java_com_example_gnssdemo_RtkLibWrapper_getRtklibVersion(JNIEnv *env, jobject thiz) {
+    return (*env)->NewStringUTF(env, VER_RTKLIB);
+}
 
-    // 调用 RTKLIB 核心函数
-    //int result = rtkpos(r, b, o, NULL);
-    rtk_t rtk = {0};
+JNIEXPORT JNICALL jlong 
+Java_com_example_gnssdemo_RtkLibWrapper_initRtk(JNIEnv *env, jobject thiz) {
+    rtk_t *rtk = (rtk_t *)malloc(sizeof(rtk_t));
+    rtkinit(rtk, &prcopt_default); // 使用默认配置初始化
+    return (jlong)rtk;
+}
 
-    // 释放字符串资源
-    (*env)->ReleaseStringUTFChars(env, rover, r);
-    (*env)->ReleaseStringUTFChars(env, base, b);
-    (*env)->ReleaseStringUTFChars(env, output, o);
+JNIEXPORT JNICALL void 
+Java_com_example_gnssdemo_RtkLibWrapper_freeRtk(JNIEnv *env, jobject thiz, jlong rtk_ptr) {
+    rtk_t *rtk = (rtk_t *)rtk_ptr;
+    rtkfree(rtk);
+    free(rtk);
+}
 
-    //return result;
-    return 0;
+JNIEXPORT JNICALL jint 
+Java_com_example_gnssdemo_RtkLibWrapper_processRtk(JNIEnv *env, jobject thiz, 
+                                          jlong rtk_ptr, 
+                                          jlong obs_ptr, 
+                                          jint n_obs, 
+                                          jlong nav_ptr) {
+    rtk_t *rtk = (rtk_t *)rtk_ptr;
+    obsd_t *obs = (obsd_t *)obs_ptr;
+    nav_t *nav = (nav_t *)nav_ptr;
+
+    /* 调用 RTKLIB 核心定位函数 */
+    int stat = rtkpos(rtk, obs, n_obs, nav);
+    
+    // 返回状态：1:fix, 2:float, 5:single...
+    return (jint)stat; 
 }
 
 int showmsg(const char *format,...){return 0;}
