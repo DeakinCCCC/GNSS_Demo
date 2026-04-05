@@ -2,8 +2,8 @@
 #include "rtklib.h"
 
 // JNI 函数声明：必须使用 extern "C" 防止 C++ 名称修饰（即使在C文件中也需声明）
-extern "C" JNIEXPORT jint JNICALL
-Java_com_example_gnssdemo_RtkLibWrapper_rtkpos(JNIEnv *env, jobject thiz, jstring rover, jstring base, jstring output) {
+extern "C" {
+JNIEXPORT jint JNICALL Java_com_example_gnssdemo_RtkLibWrapper_rtkpos(JNIEnv *env, jobject thiz, jstring rover, jstring base, jstring output) {
 
     // 获取 Java 字符串为 C 字符串
     const char *r = (*env)->GetStringUTFChars(env, rover, NULL);
@@ -19,4 +19,5 @@ Java_com_example_gnssdemo_RtkLibWrapper_rtkpos(JNIEnv *env, jobject thiz, jstrin
     (*env)->ReleaseStringUTFChars(env, output, o);
 
     return result;
+}
 }
