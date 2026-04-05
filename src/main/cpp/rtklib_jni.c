@@ -1,16 +1,22 @@
 #include <jni.h>
 #include "rtklib.h"
 
-JNIEXPORT jint JNICALL Java_com_example_gnssdemo_RtkLibWrapper_rtkpos(JNIEnv *env, jobject thiz, jstring rover, jstring base, jstring output) {
-    const char *r = (*env)->GetStringUTFChars(rover, 0);
-    const char *b = (*env)->GetStringUTFChars(base, 0);
-    const char *o = (*env)->GetStringUTFChars(output, 0);
+// JNI 函数声明：必须使用 extern "C" 防止 C++ 名称修饰（即使在C文件中也需声明）
+extern "C" JNIEXPORT jint JNICALL
+Java_com_example_gnssdemo_RtkLibWrapper_rtkpos(JNIEnv *env, jobject thiz, jstring rover, jstring base, jstring output) {
 
-    int result = rtkpos(r, b, o, 0, nullptr);
+    // 获取 Java 字符串为 C 字符串
+    const char *r = (*env)->GetStringUTFChars(env, rover, NULL);
+    const char *b = (*env)->GetStringUTFChars(env, base, NULL);
+    const char *o = (*env)->GetStringUTFChars(env, output, NULL);
 
-    (*env)->ReleaseStringUTFChars(rover, r);
-    (*env)->ReleaseStringUTFChars(base, b);
-    (*env)->ReleaseStringUTFChars(output, o);
+    // 调用 RTKLIB 核心函数
+    int result = rtkpos(r, b, o, 0, NULL);
+
+    // 释放字符串资源
+    (*env)->ReleaseStringUTFChars(env, rover, r);
+    (*env)->ReleaseStringUTFChars(env, base, b);
+    (*env)->ReleaseStringUTFChars(env, output, o);
 
     return result;
 }
