@@ -27,4 +27,10 @@ add_definitions(
 add_library(rtklib SHARED ${RTKLIB_SOURCES})
 
 target_include_directories(rtklib PRIVATE "${CMAKE_SOURCE_DIR}/rtklib_2_4_3")
-target_link_libraries(rtklib log android)
+
+find_library(log-lib log)
+
+target_link_libraries(rtklib
+    ${log-lib}
+    m
+)
