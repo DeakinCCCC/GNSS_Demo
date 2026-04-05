@@ -45,6 +45,14 @@ Java_com_example_gnssdemo_RtkLibWrapper_processRtk(JNIEnv *env, jobject thiz,
     return (jint)stat; 
 }
 
+// 在初始化时调用此逻辑，将 RTKLIB 的 trace 输出重定向
+void internal_trace(int level, const char *format, ...) {
+    va_list ap;
+    va_start(ap, format);
+    __android_log_vprint(ANDROID_LOG_DEBUG, "RTKLIB_TRACE", format, ap);
+    va_end(ap);
+}
+
 int showmsg(const char *format,...){return 0;}
 void settspan(gtime_t ts, gtime_t te){}
 void settime(gtime_t time){}
