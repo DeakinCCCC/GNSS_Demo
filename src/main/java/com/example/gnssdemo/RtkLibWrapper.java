@@ -5,5 +5,10 @@ public class RtkLibWrapper {
         System.loadLibrary("rtklib");
     }
 
-    public native int rtkpos(String roverObs, String baseObs, String outputPath);
+    public native String getRtklibVersion();
+    public native long initRtk();
+    public native void freeRtk(long rtkPtr);
+    
+    // 处理一帧观测数据
+    public native int processRtk(long rtkPtr, long obsPtr, int nObs, long navPtr);
 }
