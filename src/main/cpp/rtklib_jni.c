@@ -13,7 +13,7 @@ JNIEXPORT jint JNICALL Java_com_example_gnssdemo_RtkLibWrapper_rtkpos(JNIEnv *en
     const char *o = (*env)->GetStringUTFChars(env, output, NULL);
 
     // 调用 RTKLIB 核心函数
-    int result = rtkpos(r, b, o, 0, NULL);
+    int result = rtkpos(r, b, o, NULL);
 
     // 释放字符串资源
     (*env)->ReleaseStringUTFChars(env, rover, r);
