@@ -24,6 +24,11 @@ JNIEXPORT jint JNICALL Java_com_example_gnssdemo_RtkLibWrapper_rtkpos(JNIEnv *en
     //return result;
     return 0;
 }
+
+int showmsg(const char *format,...){return 0;}
+void settspan(gtime_t ts, gtime_t te){}
+void settime(gtime_t time){}
+
 #ifdef __cplusplus
 }
 #endif
