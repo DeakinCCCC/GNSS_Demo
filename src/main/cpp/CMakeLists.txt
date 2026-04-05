@@ -7,7 +7,7 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O2 -fPIC")
 file(GLOB RTKLIB_SOURCES
     "rtklib_2_4_3/*.c"
     "rtklib_2_4_3/rcv/*.c"
-    "rtklib_jni.c"
+    #"rtklib_jni.c"
 )
 
 add_library(rtklib SHARED ${RTKLIB_SOURCES})
