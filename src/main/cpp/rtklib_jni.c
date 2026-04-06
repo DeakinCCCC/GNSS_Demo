@@ -142,7 +142,7 @@ JNIEXPORT void JNICALL Java_com_example_gnssdemo_RtkLibWrapper_xyz2enu(
     (*env)->ReleaseDoubleArrayElements(env, pos, pos_c, JNI_ABORT);
     (*env)->ReleaseDoubleArrayElements(env, E, E_c, 0);
 }
-
+/***
 JNIEXPORT void JNICALL Java_com_example_gnssdemo_RtkLibWrapper_enu2xyz(
     JNIEnv *env, jclass cls, jdoubleArray pos, jdoubleArray E, jdoubleArray r) {
     jdouble *pos_c = (*env)->GetDoubleArrayElements(env, pos, NULL);
@@ -152,7 +152,7 @@ JNIEXPORT void JNICALL Java_com_example_gnssdemo_RtkLibWrapper_enu2xyz(
     (*env)->ReleaseDoubleArrayElements(env, pos, pos_c, JNI_ABORT);
     (*env)->ReleaseDoubleArrayElements(env, E, E_c, JNI_ABORT);
     (*env)->ReleaseDoubleArrayElements(env, r, r_c, 0);
-}
+}***/
 
 // 12 & 13. gpst2utc / utc2gpst (时间转换)
 JNIEXPORT void JNICALL Java_com_example_gnssdemo_RtkLibWrapper_gpst2utc(
