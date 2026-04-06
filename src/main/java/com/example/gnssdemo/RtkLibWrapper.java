@@ -94,7 +94,7 @@ public class RtkLibWrapper {
     public static native void xyz2enu(double[] pos, double[] E);
 
     /** 站心坐标 (ENU) 转 ECEF 坐标 */
-    public static native void enu2xyz(double[] pos, double[] E, double[] r);
+    /**public static native void enu2xyz(double[] pos, double[] E, double[] r);*/
 
     /** GPS 时间转 UTC 时间 */
     public static native void gpst2utc(long t_addr, long t_utc_addr);
