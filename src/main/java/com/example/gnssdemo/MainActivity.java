@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
 				RtkLibWrapper rtkW = new RtkLibWrapper();
 				String testStr = rtkW.test();
-				textView.setText(testStr)
+				textView.setText(testStr);
 				Python py = Python.getInstance();
 				PyObject module = py.getModule("rtk_demo");
 				PyObject result = module.callAttr("rtk_test", 5, 3);
