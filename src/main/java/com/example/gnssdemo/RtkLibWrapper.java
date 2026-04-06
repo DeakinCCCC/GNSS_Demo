@@ -51,7 +51,7 @@ public class RtkLibWrapper {
     public static native void pppos(long rtk_addr, long obs_addr, int n, long nav_addr);
 
 
-    // --- 坐标与时间转换 (使用 Java 数组方便读写) ---
+    // --- 坐标与时间转换 (使用 Java 数组方便读写) 确保 double[] 数组长度至少为 3（对于 E 矩阵则需长度为 9）---
 
     /** ECEF 坐标转地理坐标 (LLA) */
     public static native void ecef2pos(double[] r, double[] pos);
