@@ -11,7 +11,7 @@ public class RtkLibWrapper {
     
     // --- 内存管理工具 ---
     
-    /** 分配 C 结构体空间，返回内存地址。typeName 可选: "obs_t", "nav_t", "rtcm_t", "rtk_t", "prcopt_t", "sol_t", "gtime_t", "sta_t" 等 **/
+    /** 分配 C 结构体空间，返回内存地址。typeName 可选: "obs_t", "obsd_t", "nav_t", "rtcm_t", "rtk_t", "prcopt_t", "sol_t", "solopt_t", "gtime_t", "sta_t" 等 **/
     public static native long mallocStruct(String typeName);
     
     /** 释放 C 结构体空间 */
