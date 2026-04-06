@@ -5,6 +5,37 @@ public class RtkLibWrapper {
         System.loadLibrary("rtklib");
     }
 
+    public String test() {
+        // 1. 分配内存
+        long navPtr = RtkLibWrapper.mallocStruct("nav_t");
+        long rtkPtr = RtkLibWrapper.mallocStruct("rtk_t");
+        long optPtr = RtkLibWrapper.mallocStruct("prcopt_t");
+    
+        try {
+            // 2. 初始化 RTK
+            RtkLibWrapper.rtkInit(rtkPtr, 0);
+            
+            // 3. 简单的坐标转换测试
+            double[] ecef = { -2414216.5, 5386673.7, 2407421.2 };
+            double[] pos = new double[3]; // 结果将存入此处
+            RtkLibWrapper.ecef2pos(ecef, pos);
+
+            String ver = RtkLibWrapper.getRtklibVersion();
+            
+            String res = String.format("Version %s; Lat: %.6f, Lon: %.6f, Height: %.3f\n", 
+                ver, Math.toDegrees(pos[0]), Math.toDegrees(pos[1]), pos[2]);
+            
+            return res;
+        } finally {
+            // 4. 必须手动释放，否则内存泄漏
+            RtkLibWrapper.rtkFree(rtkPtr);
+            RtkLibWrapper.freeStruct(navPtr);
+            RtkLibWrapper.freeStruct(rtkPtr);
+            RtkLibWrapper.freeStruct(optPtr);
+        }
+    }
+
+
     /** 获取rtklib版本 */
     public static native String getRtklibVersion();
 
