@@ -17,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Button button = findViewById(R.id.button);
+        TextView textView = findViewById(R.id.mytext);
 		if (!Python.isStarted()) {
 			Python.start(new AndroidPlatform(this));
 		}
@@ -25,11 +26,12 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
 				RtkLibWrapper rtkW = new RtkLibWrapper();
 				String testStr = rtkW.test();
+				textView.setText(testStr)
 				Python py = Python.getInstance();
 				PyObject module = py.getModule("rtk_demo");
 				PyObject result = module.callAttr("rtk_test", 5, 3);
 				int sum = result.toInt();
-                Toast.makeText(MainActivity.this, "Hello, Android! Result is " + sum + "; " + testStr, Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "Hello, Android! Result is " + sum , Toast.LENGTH_SHORT).show();
             }
         });
     }
