@@ -7,6 +7,10 @@ public class RtkLibWrapper {
         System.loadLibrary("rtklib");
     }
 
+    public MyClass(Context context) {
+        this.context = context;
+    }
+
     public String test() {
         // 1. 分配内存
         long navPtr = RtkLibWrapper.mallocStruct("nav_t");
@@ -20,7 +24,7 @@ public class RtkLibWrapper {
             String extdir = null;
             String state = Environment.getExternalStorageState();
             if (Environment.MEDIA_MOUNTED.equals(state)) {
-                File dir = getExternalFilesDir(null);
+                File dir = context.getExternalFilesDir(null);
                 if (dir != null) {
                     extdir = dir.toString();
                 }
