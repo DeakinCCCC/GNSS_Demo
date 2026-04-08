@@ -35,9 +35,8 @@ public class RtkLibWrapper {
                 }
             }
             if (extdir != null){
-                RtkLibWrapper.traceopen(extdir + File.separator + "log_%Y%m%d%h.txt");
+                RtkLibWrapper.traceopen(extdir + File.separator + "log_%Y%m%d%h%M%S.txt");
                 RtkLibWrapper.tracelevel(5);
-                RtkLibWrapper.execcmd("ls");
             }
 
             
@@ -137,7 +136,5 @@ public class RtkLibWrapper {
     
     /** 设置日志记录等级（1-5） */
     public static native void tracelevel(int level);
-
-    public static native int execcmd(String cmd);
 
 }
