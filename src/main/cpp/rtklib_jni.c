@@ -1,11 +1,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <jni.h>
-#include <android/log.h>
 #include "rtklib.h"
-
-#define LOG_TAG "RTKLIB_JNI"
-#define LOGI(...) __android_log_print(ANDROID_LOG_INFO, LOG_TAG, __VA_ARGS__)
 
 // 辅助函数：快速分配并清零内存
 #define MALLOC_STRUCT(type) (jlong)(uintptr_t)calloc(1, sizeof(type))
@@ -168,15 +164,24 @@ JNIEXPORT void JNICALL Java_com_example_gnssdemo_RtkLibWrapper_utc2gpst(
 }
 
 
-// --- 额外处理---
+// --- 日志输出---
 
-// 在初始化时调用此逻辑，将 RTKLIB 的 trace 输出重定向
-void internal_trace(int level, const char *format, ...) {
-    va_list ap;
-    va_start(ap, format);
-    __android_log_vprint(ANDROID_LOG_DEBUG, "RTKLIB_TRACE", format, ap);
-    va_end(ap);
+JNIEXPORT jint JNICALL Java_com_example_gnssdemo_RtkLibWrapper_traceopen(JNIEnv *env, jclass cls, jstring file) {
+    const char *path = (*env)->GetStringUTFChars(env, file, NULL);
+    int ret = traceopen(path);
+    (*env)->ReleaseStringUTFChars(env, file, path);
+    return ret;
 }
+
+JNIEXPORT void JNICALL Java_com_example_gnssdemo_RtkLibWrapper_traceclose(JNIEnv *env, jclass cls) {
+    traceclose();
+}
+
+JNIEXPORT void JNICALL Java_com_example_gnssdemo_RtkLibWrapper_tracelevel(JNIEnv *env, jclass cls, jint level) {
+    tracelevel(level);
+}
+
+// --- 额外处理---
 
 // 未实现的函数，不添加则无法通过编译
 int showmsg(const char *format,...){return 0;}
