@@ -166,9 +166,9 @@ JNIEXPORT void JNICALL Java_com_example_gnssdemo_RtkLibWrapper_utc2gpst(
 
 // --- 日志输出---
 
-JNIEXPORT jint JNICALL Java_com_example_gnssdemo_RtkLibWrapper_traceopen(JNIEnv *env, jclass cls, jstring file) {
+JNIEXPORT void JNICALL Java_com_example_gnssdemo_RtkLibWrapper_traceopen(JNIEnv *env, jclass cls, jstring file) {
     const char *path = (*env)->GetStringUTFChars(env, file, NULL);
-    int ret = traceopen(path);
+    traceopen(path);
     (*env)->ReleaseStringUTFChars(env, file, path);
     return ret;
 }
