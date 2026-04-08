@@ -1,11 +1,15 @@
 package com.example.gnssdemo;
 
 import android.os.Environment;
+import android.content.Context;
+
 
 public class RtkLibWrapper {
     static {
         System.loadLibrary("rtklib");
     }
+
+    private Context context;
 
     public RtkLibWrapper(Context context) {
         this.context = context;
@@ -120,7 +124,16 @@ public class RtkLibWrapper {
     /** GPS 时间转 UTC 时间 */
     public static native void gpst2utc(long t_addr, long t_utc_addr);
 
-    /** UTC 时间转 GPS 时间 */
-    public static native void utc2gpst(long t_utc_addr, long t_addr);
+    
+    // --- 日志记录 ---
+    
+    /** 设置日志记录文件 */
+    public static native int traceopen(String file);
+    
+    /** 关闭日志记录 */
+    public static native void traceclose();
+    
+    /** 设置日志记录等级（1-5） */
+    public static native void tracelevel(int level);
 
 }
