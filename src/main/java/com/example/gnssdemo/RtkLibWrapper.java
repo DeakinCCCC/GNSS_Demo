@@ -7,7 +7,7 @@ public class RtkLibWrapper {
         System.loadLibrary("rtklib");
     }
 
-    public MyClass(Context context) {
+    public RtkLibWrapper(Context context) {
         this.context = context;
     }
 
