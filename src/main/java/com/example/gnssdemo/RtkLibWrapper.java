@@ -1,5 +1,7 @@
 package com.example.gnssdemo;
 
+import android.os.Environment;
+
 public class RtkLibWrapper {
     static {
         System.loadLibrary("rtklib");
@@ -14,6 +16,20 @@ public class RtkLibWrapper {
         try {
             // 2. 初始化 RTK
             RtkLibWrapper.rtkInit(rtkPtr, 0);
+
+            String extdir = null;
+            String state = Environment.getExternalStorageState();
+            if (Environment.MEDIA_MOUNTED.equals(state)) {
+                File dir = getExternalFilesDir(null);
+                if (dir != null) {
+                    extdir = dir.toString()
+                }
+            }
+            if (exdir){
+                RtkLibWrapper.traceopen(extdir + File.separator + "log_%Y%m%d%h");
+                RtkLibWrapper.tracelevel(5);
+            }
+
             
             // 3. 简单的坐标转换测试
             double[] ecef = { -2414216.5, 5386673.7, 2407421.2 };
@@ -28,6 +44,7 @@ public class RtkLibWrapper {
             return res;
         } finally {
             // 4. 必须手动释放，否则内存泄漏
+            RtkLibWrapper.traceclose();
             RtkLibWrapper.rtkFree(rtkPtr);
             RtkLibWrapper.freeStruct(navPtr);
             RtkLibWrapper.freeStruct(rtkPtr);
