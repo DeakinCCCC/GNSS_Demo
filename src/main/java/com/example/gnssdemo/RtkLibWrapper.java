@@ -26,7 +26,7 @@ public class RtkLibWrapper {
                 }
             }
             if (exdir){
-                RtkLibWrapper.traceopen(extdir + File.separator + "log_%Y%m%d%h");
+                RtkLibWrapper.traceopen(extdir + File.separator + "log_%Y%m%d%h.txt");
                 RtkLibWrapper.tracelevel(5);
             }
 
