@@ -12,10 +12,13 @@ import com.chaquo.python.android.AndroidPlatform;
 import com.chaquo.python.PyObject;
 
 public class MainActivity extends AppCompatActivity {
+	private static MainActivity instance;
+	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+		instance = this;
 
         Button button = findViewById(R.id.button);
         TextView textView = findViewById(R.id.mytext);
@@ -25,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-				RtkLibWrapper rtkW = new RtkLibWrapper(this);
+				RtkLibWrapper rtkW = new RtkLibWrapper(instance);
 				String testStr = rtkW.test();
 				textView.setText(testStr);
 				Python py = Python.getInstance();
