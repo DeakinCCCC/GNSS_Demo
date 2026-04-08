@@ -129,7 +129,7 @@ public class RtkLibWrapper {
     // --- 日志记录 ---
     
     /** 设置日志记录文件 */
-    public static native int traceopen(String file);
+    public static native void traceopen(String file);
     
     /** 关闭日志记录 */
     public static native void traceclose();
