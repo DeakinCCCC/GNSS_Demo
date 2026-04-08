@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-				RtkLibWrapper rtkW = new RtkLibWrapper();
+				RtkLibWrapper rtkW = new RtkLibWrapper(this);
 				String testStr = rtkW.test();
 				textView.setText(testStr);
 				Python py = Python.getInstance();
