@@ -170,7 +170,6 @@ JNIEXPORT void JNICALL Java_com_example_gnssdemo_RtkLibWrapper_traceopen(JNIEnv 
     const char *path = (*env)->GetStringUTFChars(env, file, NULL);
     traceopen(path);
     (*env)->ReleaseStringUTFChars(env, file, path);
-    return ret;
 }
 
 JNIEXPORT void JNICALL Java_com_example_gnssdemo_RtkLibWrapper_traceclose(JNIEnv *env, jclass cls) {
