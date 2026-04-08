@@ -22,7 +22,7 @@ public class RtkLibWrapper {
             if (Environment.MEDIA_MOUNTED.equals(state)) {
                 File dir = getExternalFilesDir(null);
                 if (dir != null) {
-                    extdir = dir.toString()
+                    extdir = dir.toString();
                 }
             }
             if (exdir){
