@@ -180,12 +180,6 @@ JNIEXPORT void JNICALL Java_com_example_gnssdemo_RtkLibWrapper_tracelevel(JNIEnv
     tracelevel(level);
 }
 
-JNIEXPORT jint JNICALL Java_com_example_gnssdemo_RtkLibWrapper_execcmd(JNIEnv *env, jclass cls, jstring cmd) {
-    const char *cmd_c = (*env)->GetStringUTFChars(env, cmd, NULL);
-    int ret = execcmd(cmd_c);
-    (*env)->ReleaseStringUTFChars(env, cmd, cmd_c);
-    return ret;
-}
 
 // --- 额外处理---
 
