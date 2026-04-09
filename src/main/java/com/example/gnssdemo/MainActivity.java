@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
 					        adr = String.format("ADR: %.4f m (±%.4f)", adrMeters, sigma);
 					    }
 					} else {
-					    logView.append("ADR 无效\n");
+					    adr = "ADR: NOT_VALID";
 					}
 
                     // 格式化输出：系统ID, 卫星号, 载噪比, 伪距率
