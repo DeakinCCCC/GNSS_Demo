@@ -34,12 +34,30 @@ public class MainActivity extends AppCompatActivity {
             public void onGnssMeasurementsReceived(GnssMeasurementsEvent event) {
                 StringBuilder sb = new StringBuilder();
                 for (GnssMeasurement m : event.getMeasurements()) {
+					double adrMeters = m.getAccumulatedDeltaRangeMeters();
+					int adrState = m.getAccumulatedDeltaRangeState();
+					String adr = "";
+					
+					if ((adrState & GnssMeasurement.ADR_STATE_VALID) != 0) {
+					    if ((adrState & GnssMeasurement.ADR_STATE_CYCLE_SLIP) != 0) {
+					        // 发现周跳，需要重新初始化滤波器
+					        adr = "ADR: CYCLE_SLIP";
+					    } else {
+					        // 数据可靠，可用于高精度解算
+					        double sigma = measurement.getAccumulatedDeltaRangeUncertaintyMeters(); // 精度标准差
+					        adr = String.format("ADR: %.4f m (±%.4f)", adrMeters, sigma);
+					    }
+					} else {
+					    logView.append("ADR 无效\n");
+					}
+
                     // 格式化输出：系统ID, 卫星号, 载噪比, 伪距率
-                    sb.append(String.format("Const:%d | SVID:%3d | CN0:%.1f | PRate:%.1f\n",
+                    sb.append(String.format("Const:%d | SVID:%3d | CN0:%.1f | PRate:%.1f | %s\n",
                             m.getConstellationType(),
                             m.getSvid(),
                             m.getCn0DbHz(),
-                            m.getPseudorangeRateMetersPerSecond()));
+                            m.getPseudorangeRateMetersPerSecond(),
+							adr));
                 }
                 runOnUiThread(() -> {
                     logView.setText(sb.toString()); // 更新当前所有可见卫星数据
@@ -47,10 +65,12 @@ public class MainActivity extends AppCompatActivity {
                 });
             }
 
+			/**
             @Override
             public void onStatusChanged(int status) {
                 // 处理 GNSS 状态变化（如不支持原始数据输出）
             }
+			**/
         };
 	
     @Override
