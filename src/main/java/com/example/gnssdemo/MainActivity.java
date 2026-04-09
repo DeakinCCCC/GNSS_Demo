@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
 					        adr = "ADR: CYCLE_SLIP";
 					    } else {
 					        // 数据可靠，可用于高精度解算
-					        double sigma = measurement.getAccumulatedDeltaRangeUncertaintyMeters(); // 精度标准差
+					        double sigma = m.getAccumulatedDeltaRangeUncertaintyMeters(); // 精度标准差
 					        adr = String.format("ADR: %.4f m (±%.4f)", adrMeters, sigma);
 					    }
 					} else {
