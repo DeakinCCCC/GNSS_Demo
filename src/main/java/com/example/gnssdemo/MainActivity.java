@@ -129,6 +129,6 @@ public class MainActivity extends AppCompatActivity {
 	protected void onPause() {
 	    super.onPause();
 	    // 停止监听以节省电力
-	    locationManager.unregisterGnssMeasurementsCallback(gnssCallback);
+	    locationManager.unregisterGnssMeasurementsCallback(measurementCallback);
 	}
 }
